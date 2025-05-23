@@ -30,4 +30,12 @@ class AdminController extends Controller
         }
 
     }
+
+    public function delete_category($id){
+        $data = Category::find($id);
+
+        $data->delete();
+        flash()->option('timeout', 3000)->warning('Category has been Deleted!');
+        return redirect()->back();
+    }
 }
