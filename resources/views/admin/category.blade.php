@@ -71,7 +71,7 @@
                     })
                     .then((willCancel) => {
                         if(willCancel){
-                            window.location.href=preventDefault;
+                            window.location.href=urlToRedirect;
                         }
                     });
                 }

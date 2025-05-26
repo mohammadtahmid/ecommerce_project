@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Validation\ValidationException;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use tidy;
 
 class AdminController extends Controller
 {
@@ -36,6 +38,52 @@ class AdminController extends Controller
 
         $data->delete();
         flash()->option('timeout', 3000)->warning('Category has been Deleted!');
+        return redirect()->back();
+    }
+
+    public function edit_category($id){
+        $data = Category::find($id);
+        return view('admin.edit_category',compact('data'));
+    }
+
+    public function update_category(Request $request, $id){
+        $data = Category::find($id);
+        $data->category_name = $request->category;
+
+        $data->save();
+
+        flash()->option('timeout', 3000)->success('Category has been Deleted!');
+
+        return redirect('/view_category');
+
+    }
+
+
+    //product controller start
+    public function add_product(){
+        $category = Category::all();
+        return view('admin.add_product',compact('category'));
+    }
+
+    public function upload_product(Request $request){
+
+        $data = new Product;
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->price = $request->price;
+        $data->quantity = $request->quantity;
+        $data->category = $request->category;
+
+        $image = $request->image;
+        if($image){
+
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $request->image->move('products',$imagename);
+            $data->image = $imagename;
+        }
+
+        $data->save();
+        flash()->option('timeout', 3000)->success('Product has been added successfully!');
         return redirect()->back();
     }
 }
