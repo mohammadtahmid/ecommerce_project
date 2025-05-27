@@ -33,3 +33,4 @@ route::post('update_category/{id}',[AdminController::class,'update_category'])->
 //Product route start
 route::get('add_product',[AdminController::class,'add_product'])->middleware(['auth','admin']);
 route::post('upload_product',[AdminController::class,'upload_product'])->middleware(['auth','admin']);
+route::get('/view_product',[AdminController::class,'view_product'])->middleware(['auth','admin']);

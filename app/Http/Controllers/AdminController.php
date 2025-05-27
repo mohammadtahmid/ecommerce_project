@@ -86,4 +86,9 @@ class AdminController extends Controller
         flash()->option('timeout', 3000)->success('Product has been added successfully!');
         return redirect()->back();
     }
+
+    public function view_product(){
+        $product = Product::paginate(10);
+        return view('admin.view_product',compact('product'));
+    }
 }
