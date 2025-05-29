@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -18,27 +19,29 @@
                 <thead>
                     <tr>
                     <th scope="col">Id</th>
+                    <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Category</th>
                     <th scope="col">image</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" class="d-flex justify-content-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($product as $products)
                     <tr>
                         <th scope="row">{{ $products->id }}</th>
-                        <td>{{ $products->description }}</td>
+                        <td>{{ $products->title }}</td>
+                        <td>{!!Str::limit($products->description,50)!!}</td>
                         <td>{{ $products->price }}</td>
                         <td>{{ $products->quantity }}</td>
                         <td>{{ $products->category }}</td>
                         <td><img class="" style="height: 120px; width: 120px;" src="products/{{ $products->image }}" alt="image"></td>
                         <td>
                             <a href="#" class="btn btn-info">View</a>
-                            <a href="#" class="btn btn-success">Edit</a>
-                            <a href="#" class="btn btn-danger">Delete</a>
+                            <a href="{{ url('update_product',$products->id) }}" class="btn btn-success">Edit</a>
+                            <a href="{{ url('delete_product',$products->id) }}" onclick="confirmation(event)" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                     @endforeach

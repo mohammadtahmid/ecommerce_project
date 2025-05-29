@@ -1,3 +1,27 @@
+            <script type="text/javascript">
+                function confirmation(ev){
+                    ev.preventDefault();
+                    var urlToRedirect = ev.currentTarget.getAttribute('href');
+                    console.log(urlToRedirect);
+                    swal({
+                        title:"Are you sure to Delete this",
+                        text:"This Delete will be parmanent",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode:true,
+                    })
+                    .then((willCancel) => {
+                        if(willCancel){
+                            window.location.href=urlToRedirect;
+                        }
+                    });
+                }
+            </script>
+
+
+
+
+
 <script src="{{ asset('/admincss/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('/admincss/vendor/popper.js/umd/popper.min.js') }}"> </script>
     <script src="{{ asset('/admincss/vendor/bootstrap/js/bootstrap.min.js') }}"></script>

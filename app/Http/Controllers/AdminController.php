@@ -91,4 +91,44 @@ class AdminController extends Controller
         $product = Product::paginate(10);
         return view('admin.view_product',compact('product'));
     }
+
+    public function delete_product($id){
+
+        $data = Product::find($id);
+
+        $image_path = public_path('products/'.$data->image);
+        if(file_exists($image_path)){
+            unlink($image_path);
+        }
+
+        $data->delete();
+        flash()->option('timeout', 3000)->info('Product has been Deleted successfully!');
+        return redirect()->back();
+
+    }
+
+    public function update_product($id){
+        $data = Product::find($id);
+        $category = Category::all();
+        return view('admin.update_page',compact('data','category'));
+    }
+
+    public function edit_product(Request $request, $id){
+        $data = Product::find($id);
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->price = $request->price;
+        $data->quantity = $request->quantity;
+        $data->category = $request->category;
+
+        $image = $request->image;
+        if($image){
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $request->image->move('products',$imagename);
+            $data->image = $imagename;
+        }
+        $data->save();
+        flash()->option('timeout', 3000)->info('Product has been Updated successfully!');
+        return redirect('/view_product');
+    }
 }
