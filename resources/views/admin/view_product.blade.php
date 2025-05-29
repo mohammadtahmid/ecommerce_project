@@ -15,6 +15,19 @@
           <div class="container-fluid">
 
 
+
+                <form action="{{ url('product_search') }}" method="get">
+                    <div class="d-flex w-25">
+                        <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search"/>
+                        <input class="btn btn-outline-success" type="submit" value="Search">
+                    </div>
+                </form>
+
+
+
+
+
+
                 <table class="table">
                 <thead>
                     <tr>

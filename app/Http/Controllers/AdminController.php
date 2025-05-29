@@ -88,7 +88,7 @@ class AdminController extends Controller
     }
 
     public function view_product(){
-        $product = Product::paginate(10);
+        $product = Product::paginate(3);
         return view('admin.view_product',compact('product'));
     }
 
@@ -130,5 +130,20 @@ class AdminController extends Controller
         $data->save();
         flash()->option('timeout', 3000)->info('Product has been Updated successfully!');
         return redirect('/view_product');
+
     }
+
+    //Search Product
+    public function product_search(Request $request){
+        $search = $request->search;
+
+        $product = Product::where('title','LIKE','%'.$search.'%')->orWhere('category','LIKE','%'.$search.'%')->paginate(3);
+        return view('admin.view_product',compact('product'));
+    }
+
+
+
+
+
+
 }
