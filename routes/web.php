@@ -8,9 +8,8 @@ use App\Http\Controllers\AdminController;
 
 route::get('/',[HomeCotroller::class,'home']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+route::get('/dashboard',[HomeCotroller::class,'login_home'])->
+    middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,3 +39,8 @@ route::post('edit_product/{id}',[AdminController::class,'edit_product'])->middle
 
 //search Product
 route::get('product_search',[AdminController::class,'product_search'])->middleware(['auth','admin']);
+
+
+
+//home
+route::get('product_details/{id}',[HomeCotroller::class,'product_details']);
